@@ -4,7 +4,7 @@
     box-sizing: border-box;
 }
 
-:root {
+ :root {
     --hue: 200;
     --saturation: 50%;
     --foreground-color: hsl(var(--hue), var(--saturation), 75%);
@@ -12,7 +12,7 @@
 }
 
 body {
-    margin: 0px;
+    margin: 0;
     background-color: var(--background-color);
     overflow: hidden;
 }
