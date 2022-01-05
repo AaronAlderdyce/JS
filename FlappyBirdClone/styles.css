@@ -35,5 +35,6 @@ body {
     width: var(--bird-size);
     height: var(--bird-size);
     left: var(--bird-size);
+    top: calc(var(--bird-top) * 1px);
     border-radius: 50%;
 }
