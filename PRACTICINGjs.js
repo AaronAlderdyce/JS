@@ -1,13 +1,13 @@
 class Calculator {
-    constructor(oldOperand, newOperand) {
-        this.oldOperand = oldOperand
-        this.newOperand = newOperand
+    constructor(previousOperandTextElementTextElement, currentOperandTextElementTextElement) {
+        this.previousOperandTextElement = previousOperandTextElement
+        this.currentOperandTextElement = currentOperandTextElement
         this.clear()
     }
 
     clear() {
         this.currentOperand = ''
-        this.oldOperand = ''
+        this.previousOperand = ''
         this.operation = undefined
     }
 
@@ -22,17 +22,17 @@ class Calculator {
 
     chooseOperation(operation) {
         if (this.currentOperand === '') return
-        if (this.oldOperand !== '') {
+        if (this.previousOperand !== '') {
             this.compute()
         }
         this.operation = operation
-        this.oldOperand = this.currentOperand
+        this.previousOperand = this.currentOperand
         this.currentOperand = ''
     }
 
     compute() {
         let computation
-        const prev = parseFloat(this.oldOperand)
+        const prev = parseFloat(this.previousOperand)
         const current = parseFloat(this.currentOperand)
         if (isNaN(prev) || isNaN(current)) return
         switch (this.operation) {
@@ -53,18 +53,18 @@ class Calculator {
         }
         this.currentOperand = computation
         this.operation = undefined
-        this.oldOperand = ''
+        this.previousOperand = ''
     }
 
     getDisplayNumber(number) {
         const stringNumber = number.toString()
-        const integerDigits = parseFloat(stringNumber.split('.')[0])
-        const decimalDigits = stringNumber.split('.')[1]
+        const integerDigits = parseFloat(stringNumber.split(".")[0])
+        const decimalDigits = stringNumber.split(".")[1]
         let integerDisplay
         if (isNaN(integerDigits)) {
-            integerDisplay = ''
+            integerDisplay = ""
         } else {
-            integerDisplay = integerDigits.toLocaleString('en', { maximumFractionDigits: 0 })
+            integerDisplay = integerDigits.toLocaleString("en", { maximumFractionDigits: 0 })
         }
         if (decimalDigits != null) {
             return `${integerDisplay}.${decimalDigits}`
@@ -74,14 +74,14 @@ class Calculator {
     }
 
     updateDisplay() {
-        this.newOperand.innerText =
-            this.getDisplayNumber(this.currentOperand)
+        this.currentOperandTextElement.innerText = this.getDisplayNumber(this.currentOperand)
         if (this.operation != null) {
-            this.oldOperand.innerText =
-                `${this.getDisplayNumber(this.oldOperand)} ${this.operation}`
+            this.previousOperandTextElement.innerText =
+                `${this.getDisplayNumber(this.previousOperand)} ${this.operation}`
         } else {
-            this.oldOperand.innerText = ''
+            this.previousOperandTextElement.innerText = ""
         }
+
     }
 }
 
@@ -91,10 +91,10 @@ const operationButtons = document.querySelectorAll('[data-operation]')
 const equalsButton = document.querySelector('[data-equals]')
 const deleteButton = document.querySelector('[data-delete]')
 const allClearButton = document.querySelector('[data-all-clear]')
-const oldOperand = document.querySelector('[data-previous-operand]')
-const newOperand = document.querySelector('[data-current-operand]')
+const previousOperandTextElementTextElement = document.querySelector('[data-previous-operand]')
+const currentOperandTextElementTextElement = document.querySelector('[data-current-operand]')
 
-const calculator = new Calculator(oldOperand, newOperand)
+const calculator = new Calculator(previousOperandTextElement, currentOperandTextElement)
 
 numberButtons.forEach(button => {
     button.addEventListener('click', () => {
